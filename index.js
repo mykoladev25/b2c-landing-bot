@@ -1,7 +1,9 @@
 require('dotenv').config();
+
 const TelegramBot = require('node-telegram-bot-api');
 const { execSync } = require('child_process');
 const fs = require('fs');
+const os = require('os');
 const path = require('path');
 
 const token = process.env.TELEGRAM_BOT_TOKEN;
@@ -24,9 +26,9 @@ const QUIZ_STEPS = {
 };
 
 const questions = {
-    [QUIZ_STEPS.BUSINESS_NAME]: "Як називається ваш бізнес? (наприклад, 'Кав'ярня Золотий Дощ')",
+    [QUIZ_STEPS.BUSINESS_NAME]: "Як називається ваш бізнес? (наприклад, 'Кав'ярня Обеліск')",
     [QUIZ_STEPS.DESCRIPTION]: "Опишіть ваш бізнес в 2-3 реченнях. Чим ви унікальні?",
-    [QUIZ_STEZPS.VIBE]: "Опишіть атмосферу/стиль вашого бізнесу трьома ключовими словами (наприклад, 'модерн, затишний, преміум')",
+    [QUIZ_STEPS.VIBE]: "Опишіть атмосферу/стиль вашого бізнесу трьома ключовими словами (наприклад, 'модерн, затишний, преміум')",
     [QUIZ_STEPS.SERVICES]: "Перерахуйте ваші основні послуги/товари та їх ціни (наприклад, 'Еспресо: 2 EUR, Капучино: 3 EUR'). Кожен пункт з нового рядка.",
     [QUIZ_STEPS.REVIEWS]: "Надайте 2-3 коротких відгуки від ваших клієнтів (наприклад, 'Дуже смачна кава - Іван П.'). Кожен відгук з нового рядка.",
     [QUIZ_STEPS.LANGUAGE]: "Якою мовою ви хочете бачити лендінг? (наприклад, 'Українська', 'English', 'Deutsch')",
@@ -152,7 +154,7 @@ Instructions:
 6. Output ONLY raw HTML (<!DOCTYPE html>...</html>). NO markdown ticks. NO explanations. DO NOT output your thinking process. ONLY RAW HTML.`;
     
     const frontendPromptFile = path.join(os.tmpdir(), `frontend_prompt_${chatId}.txt`);
-    fs.writeFileSync(frontendPromptFile, frontendPrompt);
+    fs.writeFileSync(frontendPromptFile, frontendPromptContent);
 
     try {
         // Fetch images dynamically
@@ -208,7 +210,7 @@ Instructions:
 
     } catch (error) {
         console.error("Landing page generation failed:", error);
-        bot.sendMessage(chatId, "На жаль, сталася помилка під час генерації лендінгу. Спробуйте ще раз або зверніться до розробника.`);
+        bot.sendMessage(chatId, `На жаль, сталася помилка під час генерації лендінгу. Спробуйте ще раз або зверніться до розробника.`);
     } finally {
         // Clean up temporary prompt file
         if (fs.existsSync(frontendPromptFile)) fs.unlinkSync(frontendPromptFile);
