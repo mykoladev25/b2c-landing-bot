@@ -1,0 +1,22 @@
+{
+  "name": "b2c-landing-bot",
+  "version": "1.0.0",
+  "description": "Telegram bot for generating B2C landing page demos via OpenClaw agents.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [
+    "telegram-bot",
+    "landing-page",
+    "openclaw",
+    "ai",
+    "gemini"
+  ],
+  "author": "Mykola Cherevan",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "node-telegram-bot-api": "^0.61.0"
+  }
+}
